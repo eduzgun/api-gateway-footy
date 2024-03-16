@@ -127,6 +127,7 @@ func main() {
 
 	// Load the routes
 	routes.AuthRoutes(r)
+	routes.ApiRoutes(r)
 
 	// Run the server
 	r.Run(":8080")

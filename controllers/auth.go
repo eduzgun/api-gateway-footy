@@ -7,6 +7,7 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/eduzgun/api-gateway-footy/models"
+	"github.com/eduzgun/api-gateway-footy/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -102,10 +103,10 @@ func Home(c *gin.Context) {
 
 	claims, err := utils.ParseToken(cookie)
 
-	if err != nil [
+	if err != nil {
 		c.JSON(401, gin.H{"error": "unauthorised"})
 		return
-	]
+	}
 
 	if claims.Role != "user" && claims.Role != "admin" {
 		c.JSON(401, gin.H{"error": "unauthorised"})
