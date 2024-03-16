@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 
 	"github.com/eduzgun/api-gateway-footy/utils"
 	"github.com/gin-gonic/gin"
@@ -35,6 +36,7 @@ type APIResponse struct {
 }
 
 func Fixture(c *gin.Context) {
+	fixtureId := c.Param("fixtureId")
 	cookie, err := c.Cookie("token")
 
 	if err != nil {
@@ -54,12 +56,13 @@ func Fixture(c *gin.Context) {
 		return
 	}
 
+	//1035442
 	//now make a request to rapidapi
-	url := "https://api-football-v1.p.rapidapi.com/v3/fixtures/statistics?fixture=1035442"
+	url := fmt.Sprintf("https://api-football-v1.p.rapidapi.com/v3/fixtures/statistics?fixture=" + fixtureId)
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("X-RapidAPI-Key", "76a5c68254msh15c95aa5f37d156p1a408ajsn7bc8944039ed")
+	req.Header.Add("X-RapidAPI-Key", os.Getenv("RAPID_API_KEY"))
 	req.Header.Add("X-RapidAPI-Host", "api-football-v1.p.rapidapi.com")
 
 	res, _ := http.DefaultClient.Do(req)
